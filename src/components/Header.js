@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import "./Header.css";
 
 // 动态导入 cp 组件
+const Cp = lazy(() => import("./cp"));
 
 function Header({ theme, onToggleTheme }) {
   return (
@@ -12,6 +13,9 @@ function Header({ theme, onToggleTheme }) {
           {theme === "light" ? "🌙" : "☀️"} 切换主题
         </button>
       </div>
+      <Suspense fallback={<div>加载中...</div>}>
+        <Cp />
+      </Suspense>
     </header>
   );
 }
