@@ -1,0 +1,78 @@
+.user-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.app.light .user-card {
+  --card-bg: #ffffff;
+}
+
+.app.dark .user-card {
+  --card-bg: #3a3a3a;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  width: 100%;
+}
+
+.user-name {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--name-color);
+}
+
+.app.light .user-name {
+  --name-color: #333;
+}
+
+.app.dark .user-name {
+  --name-color: #e0e0e0;
+}
+
+.user-email {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.app.dark .user-email {
+  color: #aaa;
+}
+
+.user-role {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
