@@ -53,11 +53,24 @@
 
 // export default App;
 
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import List from "./components/List";
-import { useImmer } from "use-immer";
+import { useImmer, useImmerReducer } from "use-immer";
 export const App = () => {
-  const [ListData, setListData] = useImmer([
+  const [inputValue, setInputValue] = useState("");
+  const reducer = (draft, action) => {
+    const item = draft.find((item) => item.id === action.id);
+    switch (action.type) {
+      case "delete":
+        return draft.filter((item) => item.id !== action.id);
+      case "changeName":
+        return (item.name = action.name);
+      case "add":
+        draft.push({ id: action.id, name: action.name });
+        break;
+    }
+  };
+  const [ListData, dispatch] = useImmerReducer(reducer, [
     { id: 1, name: "tom" },
     { id: 2, name: "tom1" },
     { id: 3, name: "tom2" },
@@ -69,15 +82,7 @@ export const App = () => {
     { id: 9, name: "tom8" },
     { id: 10, name: "tom9" },
   ]);
-  const [inputValue, setInputValue] = useState("");
 
-  const deleteHander = (id) => {
-    setListData(
-      ListData.filter((item) => {
-        return item.id !== id;
-      })
-    );
-  };
   return (
     <div
       style={{
@@ -97,15 +102,13 @@ export const App = () => {
       ></input>
       <button
         onClick={() => {
-          setListData((draft) => {
-            draft.push({ id: ListData.length + 1, name: inputValue });
-          });
+          dispatch({ type: "add", id: ListData.length + 1, name: inputValue });
           setInputValue("");
         }}
       >
         添加
       </button>
-      <List ListData={ListData} deleteHander={deleteHander} />
+      <List ListData={ListData} dispatch={dispatch} />
     </div>
   );
 };
