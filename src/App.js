@@ -54,7 +54,7 @@
 // export default App;
 
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import List from "./components/List";
+import List from "./components/LIst";
 import { useImmer, useImmerReducer } from "use-immer";
 export const App = () => {
   const [inputValue, setInputValue] = useState("");
@@ -93,7 +93,7 @@ export const App = () => {
     setTimeout(() => {
       setCnt(cnt + 1);
     }, 1000);
-  });
+  }, []);
   const myRef = useRef(null);
 
   return (
@@ -122,10 +122,37 @@ export const App = () => {
       >
         添加
       </button>
-      <List ListData={ListData} dispatch={dispatch} />
-      <button ref={myRef} onClick={() => console.log(myRef.current)}>
-        获取dom
-      </button>
+      <List ref={myRef} ListData={ListData} dispatch={dispatch} />
+      <div>
+        <button onClick={() => console.log("DOM元素:", myRef.current?.dom)}>
+          获取DOM
+        </button>
+        <button
+          onClick={() =>
+            console.log("项目数量:", myRef.current?.getItemCount())
+          }
+        >
+          获取数量
+        </button>
+        <button
+          onClick={() =>
+            console.log("第一个项目:", myRef.current?.getItemById(1))
+          }
+        >
+          获取ID为1的项目
+        </button>
+        <button onClick={() => myRef.current?.scrollToTop()}>滚动到顶部</button>
+        <button
+          onClick={() =>
+            console.log("属性:", {
+              itemCount: myRef.current?.itemCount,
+              isEmpty: myRef.current?.isEmpty,
+            })
+          }
+        >
+          获取属性
+        </button>
+      </div>
     </div>
   );
 };
