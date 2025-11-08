@@ -1,4 +1,10 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useRef,
+} from "react";
+import { ThemeContext } from "../App";
 
 const List = forwardRef(({ ListData, dispatch }, ref) => {
   // 内部 ref 用于保存 DOM 元素
@@ -25,6 +31,8 @@ const List = forwardRef(({ ListData, dispatch }, ref) => {
     isEmpty: ListData.length === 0,
   }));
 
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div ref={domRef}>
       {ListData.map((item) => (
@@ -36,6 +44,7 @@ const List = forwardRef(({ ListData, dispatch }, ref) => {
           <button>修改name</button>
         </div>
       ))}
+      <div>{theme}</div>
     </div>
   );
 });

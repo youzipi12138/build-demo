@@ -53,9 +53,19 @@
 
 // export default App;
 
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import List from "./components/LIst";
 import { useImmer, useImmerReducer } from "use-immer";
+
+// 创建 ThemeContext
+export const ThemeContext = createContext();
+
 export const App = () => {
   const [inputValue, setInputValue] = useState("");
   const reducer = (draft, action) => {
@@ -95,65 +105,73 @@ export const App = () => {
     }, 1000);
   }, []);
   const myRef = useRef(null);
-
+  const [theme, setTheme] = useState("light");
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      {cnt}
-      <input
-        type="input"
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-      ></input>
-      <button
-        onClick={() => {
-          dispatch({ type: "add", id: ListData.length + 1, name: inputValue });
-          setInputValue("");
+    <ThemeContext.Provider value={{ theme }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
         }}
       >
-        添加
-      </button>
-      <List ref={myRef} ListData={ListData} dispatch={dispatch} />
-      <div>
-        <button onClick={() => console.log("DOM元素:", myRef.current?.dom)}>
-          获取DOM
-        </button>
+        {cnt}
+        <input
+          type="input"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        ></input>
         <button
-          onClick={() =>
-            console.log("项目数量:", myRef.current?.getItemCount())
-          }
+          onClick={() => {
+            dispatch({
+              type: "add",
+              id: ListData.length + 1,
+              name: inputValue,
+            });
+            setInputValue("");
+          }}
         >
-          获取数量
+          添加
         </button>
-        <button
-          onClick={() =>
-            console.log("第一个项目:", myRef.current?.getItemById(1))
-          }
-        >
-          获取ID为1的项目
-        </button>
-        <button onClick={() => myRef.current?.scrollToTop()}>滚动到顶部</button>
-        <button
-          onClick={() =>
-            console.log("属性:", {
-              itemCount: myRef.current?.itemCount,
-              isEmpty: myRef.current?.isEmpty,
-            })
-          }
-        >
-          获取属性
-        </button>
+        <List ref={myRef} ListData={ListData} dispatch={dispatch} />
+        <div>
+          <button onClick={() => console.log("DOM元素:", myRef.current?.dom)}>
+            获取DOM
+          </button>
+          <button
+            onClick={() =>
+              console.log("项目数量:", myRef.current?.getItemCount())
+            }
+          >
+            获取数量
+          </button>
+          <button
+            onClick={() =>
+              console.log("第一个项目:", myRef.current?.getItemById(1))
+            }
+          >
+            获取ID为1的项目
+          </button>
+          <button onClick={() => myRef.current?.scrollToTop()}>
+            滚动到顶部
+          </button>
+          <button
+            onClick={() =>
+              console.log("属性:", {
+                itemCount: myRef.current?.itemCount,
+                isEmpty: myRef.current?.isEmpty,
+              })
+            }
+          >
+            获取属性
+          </button>
+        </div>
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 };
 export default App;
