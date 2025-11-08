@@ -53,7 +53,7 @@
 
 // export default App;
 
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import List from "./components/List";
 import { useImmer, useImmerReducer } from "use-immer";
 export const App = () => {
@@ -82,13 +82,19 @@ export const App = () => {
     { id: 9, name: "tom8" },
     { id: 10, name: "tom9" },
   ]);
+  const [cnt, setCnt] = useState(0);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/todos/1")
       .then((response) => response.json())
       .then((json) => console.log(json))
       .catch((error) => console.error("Error:", error));
+
+    setTimeout(() => {
+      setCnt(cnt + 1);
+    }, 1000);
   });
+  const myRef = useRef(null);
 
   return (
     <div
@@ -100,6 +106,7 @@ export const App = () => {
         height: "100vh",
       }}
     >
+      {cnt}
       <input
         type="input"
         value={inputValue}
@@ -116,6 +123,9 @@ export const App = () => {
         添加
       </button>
       <List ListData={ListData} dispatch={dispatch} />
+      <button ref={myRef} onClick={() => console.log(myRef.current)}>
+        获取dom
+      </button>
     </div>
   );
 };
