@@ -53,7 +53,7 @@
 
 // export default App;
 
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import List from "./components/List";
 import { useImmer, useImmerReducer } from "use-immer";
 export const App = () => {
@@ -82,6 +82,13 @@ export const App = () => {
     { id: 9, name: "tom8" },
     { id: 10, name: "tom9" },
   ]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .catch((error) => console.error("Error:", error));
+  });
 
   return (
     <div
