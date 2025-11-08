@@ -100,18 +100,12 @@ export const App = () => {
       .then((json) => console.log(json))
       .catch((error) => console.error("Error:", error));
 
-    const timer = setInterval(() => {
-      setCnt((prev) => prev + 1);
+    setTimeout(() => {
+      setCnt(cnt + 1);
     }, 1000);
-
-    // 清理函数：组件卸载时清除定时器
-    return () => {
-      clearInterval(timer);
-    };
   }, []);
   const myRef = useRef(null);
   const [theme, setTheme] = useState("light");
-  console.log("父组件");
   return (
     <ThemeContext.Provider value={{ theme }}>
       <div

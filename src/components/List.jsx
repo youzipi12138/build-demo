@@ -31,10 +31,8 @@ const List = forwardRef(({ ListData, dispatch }, ref) => {
     isEmpty: ListData.length === 0,
   }));
 
-  // const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
-  // console.log("子组件重新渲染", { theme, ListDataLength: ListData.length });
-  console.log(1);
   return (
     <div ref={domRef}>
       {ListData.map((item) => (
@@ -46,7 +44,7 @@ const List = forwardRef(({ ListData, dispatch }, ref) => {
           <button>修改name</button>
         </div>
       ))}
-      {/* <div>{theme}</div> */}
+      <div>{theme}</div>
     </div>
   );
 });
