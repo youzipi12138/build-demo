@@ -55,8 +55,9 @@
 
 import React, { useState } from "react";
 import List from "./components/List";
+import { useImmer } from "use-immer";
 export const App = () => {
-  const [ListData, setListData] = useState([
+  const [ListData, setListData] = useImmer([
     { id: 1, name: "tom" },
     { id: 2, name: "tom1" },
     { id: 3, name: "tom2" },
@@ -96,10 +97,9 @@ export const App = () => {
       ></input>
       <button
         onClick={() => {
-          setListData([
-            ...ListData,
-            { id: ListData.length + 1, name: inputValue },
-          ]);
+          setListData((draft) => {
+            draft.push({ id: ListData.length + 1, name: inputValue });
+          });
           setInputValue("");
         }}
       >
